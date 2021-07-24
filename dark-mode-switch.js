@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/coliff/dark-mode-switch/blob/main/LICENSE)
  */
 
-var darkSwitch = document.getElementById("darkSwitch");
+const darkSwitch = document.getElementById("darkSwitch");
 window.addEventListener("load", function () {
   if (darkSwitch) {
     initTheme();
@@ -26,13 +26,9 @@ window.addEventListener("load", function () {
  * @return {void}
  */
 function initTheme() {
-  var darkThemeSelected =
-    localStorage.getItem("darkSwitch") !== null &&
-    localStorage.getItem("darkSwitch") === "dark";
-  darkSwitch.checked = darkThemeSelected;
-  darkThemeSelected
-    ? document.body.setAttribute("data-theme", "dark")
-    : document.body.removeAttribute("data-theme");
+  const currentTheme = localStorage.getItem("darkSwitch") || document.body.getAttribute('data-theme');
+  darkSwitch.checked = currentTheme === 'dark';
+  document.body.setAttribute('data-theme', currentTheme);
 }
 
 /**
@@ -42,11 +38,6 @@ function initTheme() {
  * @return {void}
  */
 function resetTheme() {
-  if (darkSwitch.checked) {
-    document.body.setAttribute("data-theme", "dark");
-    localStorage.setItem("darkSwitch", "dark");
-  } else {
-    document.body.removeAttribute("data-theme");
-    localStorage.removeItem("darkSwitch");
-  }
+  document.body.setAttribute("data-theme", darkSwitch.checked ? "dark" : "light");
+  localStorage.setItem("darkSwitch", darkSwitch.checked ? "dark" : "light");
 }
